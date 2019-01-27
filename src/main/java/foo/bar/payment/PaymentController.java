@@ -35,11 +35,7 @@ public class PaymentController {
 
             Optional<Payment> optionalPayment = paymentService.findPayment(paymentId);
 
-            if (optionalPayment.isPresent()) {
-                return Response.ok(optionalPayment.get()).build();
-            } else {
-                throw new NotFoundException();
-            }
+            return optionalPayment.map(p -> Response.ok(p).build()).orElseThrow(NotFoundException::new);
 
         } catch (NotFoundException e) {
             throw e;

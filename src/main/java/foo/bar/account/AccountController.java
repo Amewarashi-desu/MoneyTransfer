@@ -34,11 +34,7 @@ public class AccountController {
 
             Optional<Account> optionalAccount = accountService.findAccount(accountId);
 
-            if (optionalAccount.isPresent()) {
-                return Response.ok(optionalAccount.get()).build();
-            } else {
-                throw new NotFoundException();
-            }
+            return optionalAccount.map(ac -> Response.ok(ac).build()).orElseThrow(NotFoundException::new);
 
         } catch (NotFoundException e) {
             throw e;
